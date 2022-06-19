@@ -91,3 +91,12 @@ def businesses(request):
 
     return render(request,'businesses.html',{"businesses":businesses})
 
+
+@login_required(login_url='login/')
+def health(request):
+    current_user=request.user
+    profile=Profile.objects.get(username=current_user)
+    healthservices = Health.objects.filter(neighbourhood=profile.neighbourhood)
+
+    return render(request,'health.html',{"healthservices":healthservices})
+
