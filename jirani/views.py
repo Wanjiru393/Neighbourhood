@@ -92,7 +92,7 @@ def health(request):
     return render(request,'health.html',{"healthservices":healthservices})
 
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='login/')
 def authorities(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
@@ -109,3 +109,17 @@ def businesses(request):
 
     return render(request,'businesses.html',{"businesses":businesses})
 
+@login_required(login_url='login/')
+def my_profile(request):
+    current_user=request.user
+    profile =Profile.objects.get(username=current_user)
+
+    return render(request,'user_profile.html',{"profile":profile})
+
+
+@login_required(login_url='login/')
+def user_profile(request,username):
+    user = User.objects.get(username=username)
+    profile =Profile.objects.get(username=user)
+
+    return render(request,'user_profile.html',{"profile":profile})
