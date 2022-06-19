@@ -1,3 +1,36 @@
 p{
     color:rgb(119, 0, 255);
 }
+/* .panel{
+  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)) fixed;
+}
+p, label,a{
+  color:white;
+  font-size: 15px;
+}
+.panel-default{
+  border-color: inherit;
+}
+input{
+  text-align: center;
+}
+.panel{
+  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) )fixed;
+}
+p, label,a, .help-block{
+  color:white;
+  font-size: 15px;
+}
+.panel-default{
+  border-color: inherit;
+}
+li{
+  color: white;
+  list-style: none;
+}
+.help-block{
+  display:none;
+}
+input{
+  text-align: center;
+} */
