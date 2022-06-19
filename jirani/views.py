@@ -35,7 +35,7 @@ def login(request):
       user = authenticate(request, username=username, password=password)
       if user is not None:
          authlogin(request,user)
-         return redirect('create/profile')
+         return redirect('index')
       else:
          messages.error(request, 'Invalid username or password')
 
@@ -63,11 +63,10 @@ def logout(request):
    return redirect('login')
 
 
-
 def index(request):
     try:
         if not request.user.is_authenticated:
-            return redirect('/accounts/login/')
+            return redirect('login/')
         current_user=request.user
         profile =Profile.objects.get(username=current_user)
     except ObjectDoesNotExist:
@@ -75,4 +74,11 @@ def index(request):
 
     return render(request,'index.html')
 
+@login_required(login_url='login/')
+def notification(request):
+    current_user=request.user
+    profile=Profile.objects.get(username=current_user)
+    all_notifications = notifications.objects.filter(neighbourhood=profile.neighbourhood)
+
+    return render(request,'notifications.html',{"notifications":all_notifications})
 
