@@ -82,3 +82,12 @@ def notification(request):
 
     return render(request,'notifications.html',{"notifications":all_notifications})
 
+
+@login_required(login_url='login/')
+def businesses(request):
+    current_user=request.user
+    profile=Profile.objects.get(username=current_user)
+    businesses = Business.objects.filter(neighbourhood=profile.neighbourhood)
+
+    return render(request,'businesses.html',{"businesses":businesses})
+
