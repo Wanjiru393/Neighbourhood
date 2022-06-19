@@ -30,4 +30,28 @@ class notifications(models.Model):
     def __str__(self):
         return self.title
 
+class healthservices(models.Model):
+    healthservices = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.healthservices
+
+    def save_healthservices(self):
+        self.save()
+
+    @classmethod
+    def delete_healthservices(cls,healthservices):
+        cls.objects.filter(healthservices=healthservices).delete()
+
+class Health(models.Model):
+    logo = models.ImageField(upload_to='healthlogo/')
+    neighbourhood = models.ForeignKey(neighbourhood,on_delete=models.CASCADE)
+    name =models.CharField(max_length=100)
+    email = models.EmailField()
+    contact = models.IntegerField()
+    address =models.CharField(max_length=100)
+    healthservices = models.ManyToManyField(healthservices)
+
+    def __str__(self):
+        return self.name
 
