@@ -1,0 +1,47 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">The Hood</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'authorities'%}">Authorities</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'businesses'%}">Businesses</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'health'%}">Health Services</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'notifications'%}">Notifications</a>
+      </li>
+
+      {% if user.is_superuser %}
+      <li class="nav-item">
+        <a class="nav-link" href="/admin">Admin</a>
+      </li>
+      {% endif %}
+
+      {% if user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'my-profile'%}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'update-profile' %}">Edit Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="/accounts/login">Sign In</a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
