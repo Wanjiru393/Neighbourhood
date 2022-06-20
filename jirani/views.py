@@ -66,7 +66,7 @@ def logout(request):
 def index(request):
     try:
         if not request.user.is_authenticated:
-            return redirect('login/')
+            return redirect('')
         current_user=request.user
         profile =Profile.objects.get(username=current_user)
     except ObjectDoesNotExist:
@@ -74,7 +74,7 @@ def index(request):
 
     return render(request,'index.html')
 
-@login_required(login_url='login/')
+@login_required(login_url='')
 def notification(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
@@ -83,7 +83,7 @@ def notification(request):
     return render(request,'notifications.html',{"notifications":all_notifications})
 
 
-@login_required(login_url='login/')
+@login_required(login_url='')
 def health(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
@@ -92,7 +92,7 @@ def health(request):
     return render(request,'health.html',{"healthservices":healthservices})
 
 
-@login_required(login_url='login/')
+@login_required(login_url='')
 def authorities(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
@@ -101,7 +101,7 @@ def authorities(request):
     return render(request,'authorities.html',{"authorities":authorities})
 
 
-@login_required(login_url='login/')
+@login_required(login_url='')
 def businesses(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
@@ -109,7 +109,7 @@ def businesses(request):
 
     return render(request,'businesses.html',{"businesses":businesses})
 
-@login_required(login_url='login/')
+@login_required(login_url='')
 def my_profile(request):
     current_user=request.user
     profile =Profile.objects.get(username=current_user)
@@ -117,9 +117,94 @@ def my_profile(request):
     return render(request,'user_profile.html',{"profile":profile})
 
 
-@login_required(login_url='login/')
+@login_required(login_url='')
 def user_profile(request,username):
     user = User.objects.get(username=username)
     profile =Profile.objects.get(username=user)
 
     return render(request,'user_profile.html',{"profile":profile})
+
+
+
+@login_required(login_url='')
+def new_business(request):
+    current_user=request.user
+    profile =Profile.objects.get(username=current_user)
+
+    if request.method=="POST":
+        form =BusinessForm(request.POST,request.FILES)
+        if form.is_valid():
+            business = form.save(commit = False)
+            business.owner = current_user
+            business.neighbourhood = profile.neighbourhood
+            business.save()
+
+        return HttpResponseRedirect('/businesses')
+
+    else:
+        form = BusinessForm()
+
+    return render(request,'new_business.html',{"form":form})
+
+
+@login_required(login_url='')
+def create_profile(request):
+    current_user=request.user
+    if request.method=="POST":
+        form =ProfileForm(request.POST,request.FILES)
+        if form.is_valid():
+            profile = form.save(commit = False)
+            profile.username = current_user
+            profile.save()
+        return HttpResponseRedirect('/')
+
+    else:
+
+        form = ProfileForm()
+    return render(request,'create_proile.html',{"form":form})
+
+
+@login_required(login_url='')
+def update_profile(request):
+    current_user=request.user
+    if request.method=="POST":
+        instance = Profile.objects.get(username=current_user)
+        form =ProfileForm(request.POST,request.FILES,instance=instance)
+        if form.is_valid():
+            profile = form.save(commit = False)
+            profile.username = current_user
+            profile.save()
+
+        return redirect('Index')
+
+    elif Profile.objects.get(username=current_user):
+        profile = Profile.objects.get(username=current_user)
+        form = ProfileForm(instance=profile)
+    else:
+        form = ProfileForm()
+
+    return render(request,'update_profile.html',{"form":form})
+
+
+@login_required(login_url='')
+def new_notification(request):
+    current_user=request.user
+    profile =Profile.objects.get(username=current_user)
+
+    if request.method=="POST":
+        form =notificationsForm(request.POST,request.FILES)
+        if form.is_valid():
+            notification = form.save(commit = False)
+            notification.author = current_user
+            notification.neighbourhood = profile.neighbourhood
+            notification.save()
+
+   
+        return HttpResponseRedirect('/notifications')
+
+
+    else:
+        form = notificationsForm()
+
+    return render(request,'new_notifications.html',{"form":form})
+
