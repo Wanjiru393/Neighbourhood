@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as authlogin,logout
 
-from .models import neighbourhood,healthservices,Business,Health,Authorities,notifications
+from .models import neighbourhood,healthservices,Business,Health,Authorities,notifications,Profile
 from .forms import notificationsForm,ProfileForm,BusinessForm,RegisterForm
 from decouple import config,Csv
 import datetime as dt
@@ -48,7 +48,7 @@ def register(request):
       if form.is_valid():
          user = form.save(commit=False)
          user.save()
-         profile = Profile(username=username)
+         profile = Profile(username=user.id)
          profile.save()
 
       return redirect('login')
@@ -74,20 +74,20 @@ def index(request):
 
     return render(request,'index.html')
 
-@login_required(login_url='')
+
+@login_required(login_url='/accounts/login/')
 def notification(request):
-    current_user=request.user
-    profile=Profile.objects.get(username=current_user)
-    all_notifications = notifications.objects.filter(neighbourhood=profile.neighbourhood)
+    # curent_user= request.user
+    profile=Profile.objects.get(username=request.user.id)
+    all_notifications = notifications.objects.filter(neighbourhood=profile.neighbourhood).all()
 
     return render(request,'notifications.html',{"notifications":all_notifications})
 
-
 @login_required(login_url='')
 def health(request):
-    current_user=request.user
-    profile=Profile.objects.get(username=current_user)
-    healthservices = Health.objects.filter(neighbourhood=profile.neighbourhood)
+    # current_user=request.user
+    profile=Profile.objects.get(username=request.user.id)
+    healthservices = Health.objects.filter(neighbourhood=profile.neighbourhood).all()
 
     return render(request,'health.html',{"healthservices":healthservices})
 
@@ -156,12 +156,12 @@ def create_profile(request):
             profile = form.save(commit = False)
             profile.username = current_user
             profile.save()
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('index')
 
     else:
 
         form = ProfileForm()
-    return render(request,'create_proile.html',{"form":form})
+    return render(request,'create_profile.html',{"form":form})
 
 
 @login_required(login_url='')
@@ -175,7 +175,7 @@ def update_profile(request):
             profile.username = current_user
             profile.save()
 
-        return redirect('Index')
+        return redirect('index')
 
     elif Profile.objects.get(username=current_user):
         profile = Profile.objects.get(username=current_user)
@@ -188,20 +188,18 @@ def update_profile(request):
 
 @login_required(login_url='')
 def new_notification(request):
-    current_user=request.user
-    profile =Profile.objects.get(username=current_user)
+    # current_user=request.user
+    # profile =Profile.objects.get(username=current_user.id)
 
     if request.method=="POST":
         form =notificationsForm(request.POST,request.FILES)
         if form.is_valid():
             notification = form.save(commit = False)
-            notification.author = current_user
-            notification.neighbourhood = profile.neighbourhood
+            notification.author = request.user
+            # notification.neighbourhood = profile.neighbourhood
             notification.save()
 
-   
         return HttpResponseRedirect('/notifications')
-
 
     else:
         form = notificationsForm()
