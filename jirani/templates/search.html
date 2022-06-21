@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container">
+  <div class="row text-center">
+    {% if blogs %}
+    <h2> Found {{businesses|length}} results with the search term "{{message}}"</h2>
+    {% else %}
+    <h2> Found 0 results for the search term "{{message}}"</h2>
+    {% endif %}
+  </div>
+
+
+  {% if businesses %}
+  <div class="text-center">
+    <div class="panel" style="width: 40rem;">
+      <!-- <div class="custom-card-header"> -->
+      <div class="panel-body">
+        {% for business in business %}
+        <!-- <div class="custom-card-header"> -->
+
+        <div class="card" style="width: 20rem;">
+        <div class="card-body">
+          <a href="/view/blog/{{business.id}}" style="color:black;text-decoration:none;margin:auto;">
+            <h5 class="card-title">{{business.name}}</h5>
+          </a>
+        </div>
+      </div>
+        <!-- </div> -->
+
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+    {%endif %}
+</div>
+<style>
+h2{
+  color:white;
+}
+
+</style>
+{% endblock %}
