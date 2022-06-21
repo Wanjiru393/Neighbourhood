@@ -84,6 +84,10 @@ WSGI_APPLICATION = 'Hoodwatch.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+MODE=config("MODE", default="dev")
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+
 if config('MODE')=="dev":
    DATABASES = {
        'default': {
@@ -105,6 +109,9 @@ else:
    }
 
 db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
 # Password validation
