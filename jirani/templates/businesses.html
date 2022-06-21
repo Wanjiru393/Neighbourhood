@@ -4,17 +4,13 @@
 
 
 {% block content %}
-
+<body style="background-image: url('{% static 'images/login3.webp' %}');backckground-position: cover;">
     <div class="container">
     <div class="row">
         <div class="col-md-12 top-div" style="margin-top:40px;"></div>
     </div>
 
-    <div class="text-center">
-        <a href="{% url 'new-business' %}" >
-            <button class="btn btn-primary" style="height:50px;  margin-top: -6px;">Register Business</button>
-        </a>
-    </div>
+    
 
     <div class="row">
     {% for business in businesses %}
@@ -24,6 +20,11 @@
         <h3 class="card-title" data-toggle="modal" data-target="#{{business.id}}">{{business.name|truncatechars:19}}</h3>
     </div>
     </div>
+    </div>
+    <div class="text-center">
+        <a href="{% url 'new-business' %}" >
+            <button class="btn btn-success" style="height:50px;  margin-top: -6px;">Register Business</button>
+        </a>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="{{business.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -49,8 +50,10 @@
         </div>
     </div>
     </div>
-{% endfor %}
-</div>
+    {% endfor %}
+    </div>
 
-</div>
+    </div>
+
 {% endblock %}
+</body>

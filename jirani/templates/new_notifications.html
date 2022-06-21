@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block content %}
+<body style="background-image: url('{% static 'images/login3.webp' %}');backckground-position: cover;">
 <div class="container">
   <div class="row">
     <!-- Empty div -->
@@ -17,7 +18,7 @@
         <p>Please enter correct value</p>
       {% endif %}
 
-      <div class="panel panel-default" style="margin-top:150px;">
+      <div class="panel panel-default" style="margin-top:50px;">
 
         <div class="panel-body">
 
@@ -27,8 +28,8 @@
             {% csrf_token%}
             {% bootstrap_form form %}
 
-            <div class="form-group">
-              <input type="submit" class="btn btn-primary login-button" value="Post">
+            <div class="form-group mt-2">
+              <input type="submit" class="btn btn-success login-button" value="Add">
 
             </div>
             <input type="hidden" name="next" value="/">
@@ -45,4 +46,5 @@
   </div>
 
 </div>
+</body>
 {% endblock %}
