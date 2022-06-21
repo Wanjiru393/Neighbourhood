@@ -9,17 +9,18 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
+          <a class="nav-link" href="{% url 'notifications'%}">Notifications</a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'businesses'%}">Business</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="{% url 'authorities'%}">Authorities</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'businesses'%}">Businesses</a>
+          <a class="nav-link" href="{% url 'health'%}">Hospitals</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'health'%}">Health Services</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'notifications'%}">Notifications</a>
-        </li>
+        
 
         {% if user.is_superuser %}
         <li class="nav-item">
@@ -44,6 +45,10 @@
         </li>
         {% endif %}
       </ul> 
+      <form class="form-inline my-2 my-lg-0" role="search" action="">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="business" >
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
     </div>
   </nav>
 </div>

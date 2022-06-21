@@ -206,3 +206,18 @@ def new_notification(request):
 
     return render(request,'new_notifications.html',{"form":form})
 
+
+@login_required(login_url='/accounts/login/')
+def search_results(request):
+    if 'business' in request.GET and request.GET["business"]:
+        search_term = request.GET.get("business")
+        searched_businesses = Business.search_business(search_term)
+        message=f"{search_term}"
+
+        print(searched_businesses)
+
+        return render(request,'search.html',{"message":message,"blogs":searched_businesses})
+
+    else:
+        message="You haven't searched for any term"
+        return render(request,'search.html',{"message":message})
