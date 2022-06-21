@@ -43,10 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'jirani',
     'bootstrap3',
+    'storages',
     'bootstrap4',
     'tinymce',
     'rest_framework',
-    'storages',
 ]
 
 MIDDLEWARE = [
