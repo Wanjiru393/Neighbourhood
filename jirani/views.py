@@ -48,7 +48,7 @@ def register(request):
       if form.is_valid():
          user = form.save(commit=False)
          user.save()
-         profile = Profile(username=user.id)
+         profile = Profile(username=user.id)    
          profile.save()
 
       return redirect('login')
@@ -75,7 +75,7 @@ def index(request):
     return render(request,'index.html')
 
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='login')
 def notification(request):
     # curent_user= request.user
     profile=Profile.objects.get(username=request.user.id)
@@ -83,7 +83,7 @@ def notification(request):
 
     return render(request,'notifications.html',{"notifications":all_notifications})
 
-@login_required(login_url='')
+@login_required(login_url='login')
 def health(request):
     # current_user=request.user
     profile=Profile.objects.get(username=request.user.id)
@@ -92,7 +92,7 @@ def health(request):
     return render(request,'health.html',{"healthservices":healthservices})
 
 
-@login_required(login_url='')
+@login_required(login_url='login')
 def authorities(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
@@ -101,7 +101,7 @@ def authorities(request):
     return render(request,'authorities.html',{"authorities":authorities})
 
 
-@login_required(login_url='')
+@login_required(login_url='login')
 def businesses(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
@@ -109,7 +109,7 @@ def businesses(request):
 
     return render(request,'businesses.html',{"businesses":businesses})
 
-@login_required(login_url='')
+@login_required(login_url='login')
 def my_profile(request):
     current_user=request.user
     profile =Profile.objects.get(username=current_user)
@@ -117,7 +117,7 @@ def my_profile(request):
     return render(request,'user_profile.html',{"profile":profile})
 
 
-@login_required(login_url='')
+@login_required(login_url='login')
 def user_profile(request,username):
     user = User.objects.get(username=username)
     profile =Profile.objects.get(username=user)
@@ -126,7 +126,7 @@ def user_profile(request,username):
 
 
 
-@login_required(login_url='')
+@login_required(login_url='login')
 def new_business(request):
     current_user=request.user
     profile =Profile.objects.get(username=current_user)
@@ -147,7 +147,7 @@ def new_business(request):
     return render(request,'new_business.html',{"form":form})
 
 
-@login_required(login_url='')
+@login_required(login_url='login')
 def create_profile(request):
     current_user=request.user
     if request.method=="POST":
@@ -164,7 +164,7 @@ def create_profile(request):
     return render(request,'create_profile.html',{"form":form})
 
 
-@login_required(login_url='')
+@login_required(login_url='login')
 def update_profile(request):
     current_user=request.user
     if request.method=="POST":
@@ -186,7 +186,7 @@ def update_profile(request):
     return render(request,'update_profile.html',{"form":form})
 
 
-@login_required(login_url='')
+@login_required(login_url='login')
 def new_notification(request):
     # current_user=request.user
     # profile =Profile.objects.get(username=current_user.id)
@@ -207,7 +207,7 @@ def new_notification(request):
     return render(request,'new_notifications.html',{"form":form})
 
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='login')
 def search_results(request):
     if 'business' in request.GET and request.GET["business"]:
         search_term = request.GET.get("business")
