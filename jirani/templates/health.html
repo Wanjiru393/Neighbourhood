@@ -2,43 +2,47 @@
 {% load static %}
 
 {% block content %}
+
 <body style="background-image: url('{% static 'images/login3.webp' %}');backckground-position: cover;">
     <div class="container">
     <div class="row">
-        <div class="col-md-12 top-div" style="margin-top:40px;">
-        <h1 class="text-center">Health Services</h1>
-
-        </div>
+        <div class="col-md-12 top-div" style="margin-top:40px;"></div>
     </div>
+    <div class="text-center">
+        <h1>Health Services</h1>
+    </div>
+
     <div class="row">
     {% for health in healthservices %}
-        <div class="col-md-6">
-            <div class="card" style="width: 25rem;margin-top:10px;" >
-                <div class="card-body">
-                    <h3 class="card-title" data-toggle="modal" data-target="#{{health.id}}">{{health.name}}</h3>
-                </div>
+    <div class="col-md-6">   
+    <div class="card" style="width: 20rem;margin-top:10px;" >
+    <div class="card-body">
+        <div class="modal-header text-center">
+            <h3 class="text-center">{{health.name}}</h3>
+        </div>
+        <div class="modal-body">
+            <img class="card-img-top" src="{{health.logo.url}}" height=200 width=100 >
+
+            <p><span style="font-weight:bold;">Owner:</span> {{business.owner}}</p>
+            <p><span style="font-weight:bold;">Description:</span> {{business.description|safe}}</p>
+        </div>
+        <div class="modal-footer" style="display:block;">
+
+            <h4 class="text-center">Contact</h4>
+            <p><span class="bold">Phone Number:</span> {{health.contact}}</p>
+             <p><span class="bold">Email:</span> {{health.email}}</p>
+            <p><span class="bold">Address:</span> {{health.address}}</p>
+            <div class="modal-footer" style="display:block;">
+                {% for healthservice in health.healthservices.all %}
+                    <button class="btn btn-primary">{{ healthservice }}</button>
+                {% endfor%}
             </div>
         </div>
-        <!-- Modal -->
-        <div class="modal fade" id="{{health.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content text-center">
-                    <div class="modal-header text-center">
-                        <h3 class="text-center">{{health.name}}</h3>
-                    </div>
-                    <div class="modal-body">
-                        <img class="card-img-top" src="{{health.logo.url}}" height=200 width=100 >
+    </div>
+    </div>
+    </div>
 
-                        <h4 class="text-center">Contacts</h4>
-                        <p><span class="bold">Phone Number:</span> {{health.contact}}</p>
-                        <p><span class="bold">Address:</span> {{health.address}}</p>
-                        <p><span class="bold">Email:</span> {{health.email}}</p>
-                    </div>
-                    <div class="modal-footer" style="display:block;">
-                        {% for healthservice in health.healthservices.all %}
-                            <button class="btn btn-primary">{{ healthservice }}</button>
-                        {% endfor%}
-                    </div>
+                   
                 </div>
             </div>
         </div>
