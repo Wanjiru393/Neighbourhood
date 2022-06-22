@@ -15,7 +15,7 @@
     <div class="row">
     {% for health in healthservices %}
     <div class="col-md-6">   
-    <div class="card" style="width: 50rem;margin-top:10px;" >
+    <div class="card" style="width: 30rem;margin-top:10px;" >
     <div class="card-body">
         <div class="modal-header text-center">
             <h3 class="text-center">{{health.name}}</h3>
@@ -29,9 +29,9 @@
         <div class="modal-footer" style="display:block;">
 
             <h4 class="text-center">Contact</h4>
-            <p><span class="bold">Phone Number:</span> {{health.contact}}</p>
-             <p><span class="bold">Email:</span> {{health.email}}</p>
-            <p><span class="bold">Address:</span> {{health.address}}</p>
+            <p><span class="text-center">Phone Number:</span> {{health.contact}}</p>
+             <p><span class="text-center">Email:</span> {{health.email}}</p>
+            <p><span class="text-center">Address:</span> {{health.address}}</p>
             <div class="modal-footer" style="display:block;">
                 {% for healthservice in health.healthservices.all %}
                     <button class="btn btn-primary">{{ healthservice }}</button>
