@@ -66,7 +66,7 @@ def logout(request):
 def index(request):
     try:
         if not request.user.is_authenticated:
-            return redirect('')
+            return redirect('login')
         current_user=request.user
         profile =Profile.objects.get(username=current_user)
     except ObjectDoesNotExist:
