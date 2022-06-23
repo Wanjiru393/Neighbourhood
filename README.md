@@ -26,6 +26,7 @@ python3.10 manage.py makemigrations awwards python3.10 manage.py migrate Run the
 
 ## Deployment
 The application is deployed on Heroku and is live on this link:
+https://sam-hood.herokuapp.com
 
 ## Built With
 Django 4.0.4 - Back end logic of the application. Bootstrap4 - Used for overall design and responsive site Pillow 9.1.1 - Used for image uploads.
